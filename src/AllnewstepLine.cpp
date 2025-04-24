@@ -1,8 +1,7 @@
 #include "AllnewstepLine.h"
-#include <HTTPClient.h>
 
-// ประกาศ HTTPClient เดียวสำหรับ reuse
 HTTPClient http;
+WiFiClientSecure client;
 
 // ฟังก์ชันหลักส่งข้อความ
 bool AllnewstepLine::sendText(String data, String user) {
@@ -30,13 +29,15 @@ String AllnewstepLine::escapeStr(String S) {
 
 // ฟังก์ชันส่งข้อความให้คนเดียว
 bool AllnewstepLine::sendTextToSingle(String userId, String message) {
-  http.begin("https://api.line.me/v2/bot/message/push");
+  client.setInsecure();
+  
+  http.begin(client,"https://api.line.me/v2/bot/message/push");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
   String payload = "{\"to\":\"" + userId + "\",\"messages\":[{\"type\":\"text\",\"text\":\"" + this->escapeStr(message) + "\"}]}";
   int httpCode = http.POST(payload);
-
+Serial.println(httpCode);
   if (httpCode == 200) {
     return true;  // ส่งสำเร็จ
   }
@@ -45,7 +46,8 @@ bool AllnewstepLine::sendTextToSingle(String userId, String message) {
 
 // ฟังก์ชันส่งข้อความให้หลายคน
 bool AllnewstepLine::sendTextToMultiple(String* users, int numUsers, String message) {
-  http.begin("https://api.line.me/v2/bot/message/multicast");
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/multicast");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -69,7 +71,8 @@ bool AllnewstepLine::sendTextToMultiple(String* users, int numUsers, String mess
 
 // ฟังก์ชันส่งข้อความให้ทุกคน (Broadcast API)
 bool AllnewstepLine::sendTextToAll(String message) {
-  http.begin("https://api.line.me/v2/bot/message/broadcast");
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/broadcast");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -132,8 +135,9 @@ bool AllnewstepLine::sendSticker(String user, String packageId, String stickerId
 
 // ฟังก์ชันส่งสติกเกอร์ให้คนเดียว
 bool AllnewstepLine::sendStickerToSingle(String userId, String packageId, String stickerId) {
-  HTTPClient http;
-  http.begin("https://api.line.me/v2/bot/message/push");
+
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/push");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -150,8 +154,9 @@ bool AllnewstepLine::sendStickerToSingle(String userId, String packageId, String
 
 // ฟังก์ชันส่งสติกเกอร์ให้หลายคน
 bool AllnewstepLine::sendStickerToMultiple(String* users, int numUsers, String packageId, String stickerId) {
-  HTTPClient http;
-  http.begin("https://api.line.me/v2/bot/message/multicast");
+
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/multicast");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -177,8 +182,9 @@ bool AllnewstepLine::sendStickerToMultiple(String* users, int numUsers, String p
 
 // ฟังก์ชันส่งสติกเกอร์ให้ทุกคน (Broadcast API)
 bool AllnewstepLine::sendStickerToAll(String packageId, String stickerId) {
-  HTTPClient http;
-  http.begin("https://api.line.me/v2/bot/message/broadcast");
+
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/broadcast");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -212,8 +218,9 @@ bool AllnewstepLine::sendTextWithSticker(String data, String user, String packag
 
 // ฟังก์ชันส่งข้อความพร้อมสติกเกอร์ให้คนเดียว
 bool AllnewstepLine::sendTextWithStickerToSingle(String userId, String message, String packageId, String stickerId) {
-  HTTPClient http;
-  http.begin("https://api.line.me/v2/bot/message/push");
+
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/push");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -230,8 +237,9 @@ bool AllnewstepLine::sendTextWithStickerToSingle(String userId, String message, 
 
 // ฟังก์ชันส่งข้อความพร้อมสติกเกอร์ให้หลายคน
 bool AllnewstepLine::sendTextWithStickerToMultiple(String* users, int numUsers, String message, String packageId, String stickerId) {
-  HTTPClient http;
-  http.begin("https://api.line.me/v2/bot/message/multicast");
+
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/multicast");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -246,6 +254,7 @@ bool AllnewstepLine::sendTextWithStickerToMultiple(String* users, int numUsers, 
   payload += "],\"messages\":[{\"type\":\"text\",\"text\":\"" + this->escapeStr(message) + "\"}, {\"type\":\"sticker\",\"packageId\":\"" + packageId + "\",\"stickerId\":\"" + stickerId + "\"}]}";
 
   int httpCode = http.POST(payload);
+  
 
   if (httpCode == 200) {
     http.end();
@@ -257,8 +266,9 @@ bool AllnewstepLine::sendTextWithStickerToMultiple(String* users, int numUsers, 
 
 // ฟังก์ชันส่งข้อความพร้อมสติกเกอร์ให้ทุกคน (Broadcast API)
 bool AllnewstepLine::sendTextWithStickerToAll(String message, String packageId, String stickerId) {
-  HTTPClient http;
-  http.begin("https://api.line.me/v2/bot/message/broadcast");
+
+  client.setInsecure();
+  http.begin(client,"https://api.line.me/v2/bot/message/broadcast");
   http.addHeader("Content-Type", "application/json");
   http.addHeader("Authorization", "Bearer " + accessToken);
 
@@ -273,5 +283,3 @@ bool AllnewstepLine::sendTextWithStickerToAll(String message, String packageId, 
   http.end();
   return false;  // ส่งไม่สำเร็จ
 }
-
-
