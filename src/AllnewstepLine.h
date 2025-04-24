@@ -1,16 +1,19 @@
-#ifndef AllnewstepLine_H
-#define AllnewstepLine_H
+#pragma once
 
-#ifdef ESP32
+#if defined(ESP32)
   #include <WiFi.h>
   #include <HTTPClient.h>
   #include <WiFiClientSecure.h>
   #define HARDWARE "esp32"
-#else
+
+#elif defined(ESP8266)
   #include <ESP8266WiFi.h>
   #include <ESP8266HTTPClient.h>
   #include <WiFiClientSecure.h>
   #define HARDWARE "esp8266"
+
+#else
+  #error "This library supports only ESP8266 and ESP32 platforms"
 #endif
 
 class AllnewstepLine {
@@ -57,4 +60,4 @@ class AllnewstepLine {
 	bool sendSticker(String user, String packageId, String stickerId);
 };
 
-#endif
+
