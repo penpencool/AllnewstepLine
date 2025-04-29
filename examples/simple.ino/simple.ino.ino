@@ -17,7 +17,7 @@ void setup() {
   Line.sendText("สวัสดี 555", "");                                  // ส่งข้อความ ให้ทุกคนในกลุ่ม
   Line.sendSticker("", "8515", "16581243");                       // ส่งสติกเกอร์ ให้ทุกคนในกลุ่ม
   Line.sendTextWithSticker("Hello ALL", "", "8515", "16581242");  // ส่งข้อความพร้อมสติกเกอร์ ให้ทุกคนในกลุ่ม
-  Serial.priintln("LINE Send");
+  Serial.println("LINE Send");
 }
 
 void loop() {
