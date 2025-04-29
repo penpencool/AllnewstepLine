@@ -9,10 +9,10 @@ void setup() {
   Serial.begin(115200);
   WiFi.begin(wifi, pass);
   while (WiFi.status() != WL_CONNECTED) {
-    Serial.priintln(".");
+    Serial.println(".");
     delay(1000);
   }
-  Serial.priintln("Connected");
+  Serial.println("Connected");
   // ฟังก์ชั่นการส่งข้อความ LINE
   Line.sendText("สวัสดี 555", "");                                  // ส่งข้อความ ให้ทุกคนในกลุ่ม
   Line.sendSticker("", "8515", "16581243");                       // ส่งสติกเกอร์ ให้ทุกคนในกลุ่ม
