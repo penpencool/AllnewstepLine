@@ -40,14 +40,14 @@
 - ส่งข้อความให้ทุกคน: `Line.sendText("สวัสดี 55/5", "");`
 
 #### 2. การส่งสติกเกอร์
-- ส่งสติกเกอร์ให้คนเดียว: `Line.sendSticker("userId", "8515", "16581243");`
-- ส่งสติกเกอร์ให้หลายคน: `Line.sendSticker("userId1,userId2", "8515", "16581244");`
-- ส่งสติกเกอร์ให้ทุกคน: `Line.sendSticker("", "8515", "16581243");`
+- ส่งสติกเกอร์ให้คนเดียว: `Line.sendSticker("userId", "packageId", "stickerId");`
+- ส่งสติกเกอร์ให้หลายคน: `Line.sendSticker("userId1,userId2", "packageId", "stickerId");`
+- ส่งสติกเกอร์ให้ทุกคน: `Line.sendSticker("", "packageId", "stickerId");`
 
 #### 3. การส่งข้อความพร้อมสติกเกอร์
-- ส่งข้อความพร้อมสติกเกอร์ให้คนเดียว: `Line.sendTextWithSticker("Hello Max", "userId", "8515", "16581242");`
-- ส่งข้อความพร้อมสติกเกอร์ให้หลายคน: `Line.sendTextWithSticker("Hello A+B", "userId1,userId2", "8515", "16581242");`
-- ส่งข้อความพร้อมสติกเกอร์ให้ทุกคน: `Line.sendTextWithSticker("Hello All", "", "8515", "16581242");`
+- ส่งข้อความพร้อมสติกเกอร์ให้คนเดียว: `Line.sendTextWithSticker("Hello Max", "userId", "packageId", "stickerId");`
+- ส่งข้อความพร้อมสติกเกอร์ให้หลายคน: `Line.sendTextWithSticker("Hello A+B", "userId1,userId2", "packageId", "stickerId");`
+- ส่งข้อความพร้อมสติกเกอร์ให้ทุกคน: `Line.sendTextWithSticker("Hello All", "", "packageId", "stickerId");`
 
 ### ฟังก์ชันที่รองรับ
 - `sendText(String message, String userId)` : ส่งข้อความ
